@@ -241,7 +241,7 @@ html {
     position: absolute;
     top: 0; left: 0;
     background-color: transparent;
-    background-image: url(images/add\ icon.svg);
+    background-image: url(images/add-icon.svg);
     background-size: 60%;
     background-repeat: no-repeat;
     background-position: center;
@@ -319,7 +319,7 @@ html {
     width: 16px; height: 16px;
     background: var(--main-color);
     border-radius: 4px;
-    background-image: url(images/delete\ all\ icon.svg);
+    background-image: url(images/delete-all-icon.svg);
     position: relative;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
