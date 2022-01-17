@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>To do list with Calendar</title>
+</head>
+<body>
+    <div id="wrap">
+        <div class="header">
+            <div class="header--text-area">
+                <h1>𝐶𝑎𝑙𝑒𝑛𝑑𝑎𝑟 𝑤𝑖𝑡ℎ 𝑇𝑜 𝑑𝑜 𝑙𝑖𝑠𝑡</h1>
+            </div>
+        </div>
+        <div class="calendar-area">
+            <div class="inline-box">
+                <button id="previous" class="month-btn">◂</button>
+                <h3 id="monthAndYear" class="head-title"></h3>
+                <input type="month" class="seletMonth" min="1980-01" value="2022-01">
+                <button id="next" class="month-btn">▸</button>
+            </div>
+            <div class="calendar">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>일</th>
+                            <th>월</th>
+                            <th>화</th>
+                            <th>수</th>
+                            <th>목</th>
+                            <th>금</th>
+                            <th>토</th>
+                        </tr>
+                    </thead>
+                    <tbody class="cal-body"></tbody>
+                </table>
+            </div>
+            
+        </div>
+        <div class="todo-area">
+            <h2 class="todo_title"></h2>
+            <form id="todo-form">
+                <input type="text" placeholder="오늘 할 일" required />
+                <div class="square">
+                    <input type="submit" value=""/>
+                </div>
+                
+            </form>
+            <ul id="todo-list"></ul>
+            <div id="delete-all">
+                <div class="delete-all-icon"></div>
+            </div>
+        </div>   
+    </div>
+    
+    <script src="/app.js"></script>
+</body>
+</html>

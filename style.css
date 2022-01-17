@@ -1,0 +1,346 @@
+@import "reset.css";
+
+@font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'S-CoreDream-5Medium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-5Medium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: 'S-CoreDream-3Light';
+}
+
+:root {
+    --main-color: #654ea3;
+    --sub-color: #eaafc8;
+}
+
+.today-bg {
+    background: var(--main-color) !important;
+    color: #fff !important;
+}
+
+.clicked-bg {
+    background: var(--sub-color);
+    color: #fff !important;
+}
+
+.haveTodo {
+    font-family: 'S-CoreDream-5Medium';
+    font-weight: bold;
+}
+
+.sun-red {
+    color: #FE6F6F;
+}
+.sat-blue {
+    color: #707DF8;
+}
+.hidden {
+    display: none;
+}
+
+
+#wrap {
+    width: 100%;
+    min-width: 340px;
+    padding: 40px 20px 60px;
+    position: relative;
+    background: #fff;
+}
+.header {
+    width: 100%; height: 40px;
+    background: var(--main-color);
+    position: absolute;
+    top: 0; left: 0;
+}
+.header--text-area {
+    width: 100%; height: 100%;
+    text-align: center;
+    line-height: 40px;
+    vertical-align: middle;
+}
+.header--text-area h1 {
+    color: #fff;
+}
+
+.calendar-area {
+    width: 100%; height: fit-content;
+    position: relative;
+    top: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    padding: 20px 0;
+}
+
+.inline-box {
+    width: 100%;
+    position: relative;
+    text-align: center;
+}
+.month-btn {
+    -webkit-appearance: none;
+    appearance: none;
+    display: inline-block;
+    width: 20px; height: 20px;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: center;
+    vertical-align: middle;
+    border: none;
+    background: #fff;
+    color: var(--main-color);
+    padding: 0;
+}
+
+.head-title {
+    display: inline-block;
+    width: 30%;
+    vertical-align: middle;
+    line-height: 20px;
+    margin: 0 20px;
+    font-size: 20px;
+}
+
+.seletMonth {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 40%;
+    border: none;
+    outline: none;
+    background-color: #fff;
+    color: #000;
+    font-size: 16px;
+    font-family: 'S-CoreDream-3Light';
+    text-align: center;
+    display: block;
+    padding-right: 0;
+    padding-left: 17px;
+    padding-top: 6px;
+    position: absolute;
+    top: -5px; left: 50%;
+    transform: translateX(-50%);
+}
+@media screen and (min-width: 360px){
+    .seletMonth {
+        font-size: 20px;
+    }
+}
+
+.calendar {
+    position: relative;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.calendar table {
+    vertical-align: middle;
+    text-align: center;
+    border-spacing: 6px;
+    border-collapse: separate;
+    margin: 0 auto;
+}
+@media screen and (min-width: 360px){
+    .calendar table {
+        border-spacing: 10px;
+    }
+}
+
+
+.calendar thead {
+    display: none;
+}
+
+.cal-body td {
+    width: 32px; height: 32px;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 1;
+    border-radius: 100%;
+    font-size: 14px;
+}
+
+/* to do list */
+.todo-area {
+    position: relative;
+    padding: 10px 10px 50px;
+    margin-top: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+    border-radius: 10px;
+}
+
+.todo_title {
+    margin-bottom: 10px;
+    font-size: 16px;
+} 
+
+#todo-form {
+    width: 100%;
+    margin-bottom: 20px;
+}
+#todo-form > input:first-child {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+    width: 88%;
+    display: inline-block;
+    background: none; 
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #000;
+    font-size: 18px;
+    text-align: center;
+    padding: 4px 4px;
+    font-family: 'S-CoreDream-3Light';
+}
+#todo-form > input::placeholder, 
+#todo-form > input:-ms-input-placeholder {
+    color: #ccc;
+}
+#todo-form > input:focus::placeholder {
+    color: transparent;
+}
+#todo-form > .square {
+    display: inline-block;
+    width: 10%;
+    position: relative;
+    border-radius: 100%;
+    vertical-align: bottom;
+    background: var(--main-color);
+}
+@media screen and (min-width: 768px) {
+    #todo-form > input:first-child {
+        width: 94%;
+    }
+    #todo-form > .square {
+        width: 5%;
+    }
+}
+#todo-form > .square:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+#todo-form .square input:last-child {
+    -webkit-appearance: none;
+    display: block;
+    width: 100%; height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+    background-color: transparent;
+    background-image: url(/images/add\ icon.svg);
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 100%;
+    border: none;
+}
+#todo-list {
+    height: fit-content;
+    max-height: 40vh;
+}
+#todo-list li {
+    position: relative;
+    text-align: left;
+    font-size: 16px;
+    margin-top: 14px;
+}
+#todo-list li > button {
+    line-height: 16px;
+    padding: 2px 8px;
+    margin-right: -8px;
+    position: absolute;
+    top: 2px; right: 8px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #000;
+}
+#todo-list li input[type="checkbox"] {
+    display: none;
+}
+
+#todo-list li input[type="checkbox"] + label {
+    display: inline-block;
+    width: 100%;
+    height: fit-content;
+}
+
+#todo-list li input[type="checkbox"] + label .checkBox {
+    display: inline-block;
+    width: 16px; height: 16px;
+    border: 1px solid var(--main-color);
+    border-radius: 4px;
+    vertical-align: middle;
+    margin-top: -3px;
+    cursor: pointer;
+    position: relative;
+}
+#todo-list li input[type="checkbox"]:checked + label .checkBox {
+    background: var(--main-color);
+    background-image: url(../images/checked.svg);
+}
+#todo-list li input[type="checkbox"] + label span:last-child {
+    display: inline-block;
+    width: 100%;
+    max-width: 80%;
+    line-height: 24px;
+    position: relative;
+    top: 0; left: 15px;
+    vertical-align: top;
+    cursor: pointer;
+}
+#todo-list li input[type="checkbox"]:checked + label span:last-child {
+    color: #ccc;
+}
+#delete-all {
+    display: block;
+    width: 32px; height: 32px;
+    position: absolute;
+    bottom: 10px;
+    right: 6px;
+}
+.delete-all-icon {
+    display: block;
+    width: 16px; height: 16px;
+    background: var(--main-color);
+    border-radius: 4px;
+    background-image: url(/images/delete\ all\ icon.svg);
+    position: relative;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+input.change-input {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+    position: absolute;
+    top: 0; left: 0;
+    width: 80%; height: 100%;
+    border: none;
+    border-bottom: 1px solid #000;
+    padding: 4px;
+}
+input.change-input:focus {
+    -webkit-appearance: none;
+    border: none;
+    border-bottom: 1px solid #000;
+}
+.editBtn {
+    display: none;
+}
