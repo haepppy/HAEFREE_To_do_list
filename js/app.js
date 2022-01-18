@@ -233,15 +233,10 @@ function paintToDo(newTodo) {
     const span2 = document.createElement("span");
     span2.className = "checkBox";
 
-    const editBtn = document.createElement("span");
-    editBtn.className = "editBtn";
-    editBtn.addEventListener("click", paintChangeInput);
-
     li.appendChild(checkBox);
     li.appendChild(label);
     label.appendChild(span2);
     label.appendChild(span);
-    li.appendChild(editBtn);
     li.appendChild(btn); 
     toDoList.appendChild(li); 
 };
