@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-bar" content="var(--main-color)">
+    <meta name="apple-mobile-web-app-status-bar-style" content="var(--main-color)">
     <link rel="stylesheet" href="css/style.css">
     <title>To do list with Calendar</title>
 </head>
@@ -55,37 +57,50 @@
         </div>   
         <div class="custom-popup-page hidden">
             <div class="customArea">
-                <h3>Edit title</h3>
                 <form name="editTitle" id="editTitleForm">
-                    <input type="text" id="editTitle" />
+                    <fieldset id="editTitleField">
+                        <legend>Edit title</legend>
+                        <input type="text" id="editTitle" />
+                    </fieldset>
+
+                    <fieldset id="customColorField">
+                        <legend>Custom colors</legend>
+                        <div class="colorGridBox">
+                            <div class="colorBox" style="background-color: #db6b5c;"></div>
+                            <div class="colorBox" style="background-color: #f29b63;"></div>
+                            <div class="colorBox" style="background-color: #edc189;"></div>
+                            <div class="colorBox" style="background-color: #85ad68;"></div>
+                        </div>
+                        <div class="colorGridBox">
+                            <div class="colorBox" style="background-color: #d4e09b;"></div>
+                            <div class="colorBox" style="background-color: #8cacd3;"></div>
+                            <div class="colorBox" style="background-color: #28536b;"></div>
+                            <div class="colorBox" style="background-color: #8f8cd3;"></div>
+                        </div>
+                        <div class="colorGridBox">
+                            <div class="colorBox" style="background-color: #af9bb6;"></div>
+                            <div class="colorBox" style="background-color: #f4a5ae;"></div>
+                            <div class="colorBox" style="background-color: #2c2c2c;"></div>
+                            <div class="colorBox" style="background-color: #999999;"></div>
+                        </div>
+                    </fieldset>
+                    <input type="submit" value="완료" id="editSubmitBtn" class="customPageBtn">
+                    <button type="button" id="reSelectBtn" class="customPageBtn">다시 선택</button>
                 </form>
             </div>
-
-            <div class="customArea">
-                <h3>Custom colors</h3>
-                <div class="colorFlexBox">
-                    <div class="colorBox">
-                        <div class="main-color" style="background-color: #654ea3;"></div>
-                        <div class="sub-color" style="background-color: #eaafc8;"></div>
-                    </div>
-                    <div class="colorBox">
-                        <div class="main-color" style="background-color: #85ad68;"></div>
-                        <div class="sub-color" style="background-color: #edc189;"></div>
-                    </div>
-                    <div class="colorBox">
-                        <div class="main-color" style="background-color: #8cacd3;"></div>
-                        <div class="sub-color" style="background-color: #8f8cd3;"></div>
-                    </div>
-                    <div class="colorBox">
-                        <div class="main-color" style="background-color: #db6b5c;"></div>
-                        <div class="sub-color" style="background-color: #e99469;"></div>
-                    </div>
-                    <div class="colorBox">
-                        <div class="main-color" style="background-color: #2c2c2c;"></div>
-                        <div class="sub-color" style="background-color: #999999;"></div>
-                    </div>
-                </div>
-                
+            <div class="explanationArea">
+                <h3>Haefree To do list 사용법💡</h3>
+                <ol class="explanation" type="1">
+                    <li>상단 타이틀을 누르면 현재 창을 열고 닫을 수 있습니다</li>
+                    <li>"Edit title"에서 상단에 보여지는 문구를 변경할 수 있습니다</li>
+                    <li>"Custom colors"에서 색상 테마를 변경할 수 있습니다</li>
+                    <li>왼쪽으로 쓸어서 내용 수정</li>
+                    <li>우측 x버튼 눌러서 항목 제거</li>
+                    <li>우측 하단 x버튼 눌러서 항목 전체 제거</li>
+                        <li>ㅇ</li>
+                    <li></li>
+                    <li></li>
+                </ol>
             </div>
         </div>
     </div>

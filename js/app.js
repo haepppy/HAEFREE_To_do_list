@@ -336,30 +336,6 @@ function changeSubmit(e) {
     saveToDos();
 }
 
-
-function paintChangeInput(c) {
-    const thisLi = c.target.offsetParent;
-    const thisSpan = thisLi.children[1].lastChild;
-    const form = document.createElement("form");
-    const input = document.createElement("input");
-
-    form.id = 'changeList';
-    form.addEventListener("submit", changeSubmit);
-
-    input.type = "text";
-    input.value = String(thisSpan.innerText);
-    input.autofocus = 'true';
-    input.className = "change-input";
-
-    const thisId = parseInt(thisLi.id);
-    const index = toDos.findIndex(i => i.id === thisId);
-    changedObj = toDos[index];
-
-    form.appendChild(input);
-    thisLi.appendChild(form);
-};
-
-
 function promptFunc(span) {
     const spanText = String(span.target.innerText);
     const newText = window.prompt("Edit To Do List", spanText);
@@ -442,41 +418,81 @@ const popupPage = document.querySelector(".custom-popup-page")
 const editTitleForm = document.querySelector("#editTitleForm");
 const editTitleInput = document.querySelector("#editTitle");
 const colorBox = document.querySelectorAll(".colorBox");
+const reSelectBtn = document.querySelector("#reSelectBtn");
 
 const MAIN_COLOR = "--main-color";
 const SUB_COLOR = "--sub-color";
 const TITLE = "title";
 
-const savedTitle = localStorage.getItem(TITLE);
-
-function handleTitleClick(e) {
-    e.preventDefault();
-    const value = e.target.firstElementChild.value;
-    localStorage.setItem(TITLE, value);
-    mainTitle.innerText = value;
-};
-
 let savedMainColor = localStorage.getItem(MAIN_COLOR);
 let savedSubColor = localStorage.getItem(SUB_COLOR);
 
+const savedTitle = localStorage.getItem(TITLE);
 
 function handlePopupClick() {
     popupPage.classList.toggle(HIDDEN_STYLE);
-    editTitleInput.value = savedTitle;
+    editTitleInput.value = mainTitle.innerText;
 };
 
-function handleColorClick() {
-    const mainColor = this.children[0].style.backgroundColor;
-    const subColor = this.children[1].style.backgroundColor;
+let haveMainColor = false;
+let haveSubColor = false;
+let mainColor;
+let subColor;
 
+function handleColorClick(e) {
+    if (!haveMainColor && !haveSubColor) {
+        getMainColor(e);
+    } else if (haveMainColor && !haveSubColor) {
+        getSubColor(e);
+        console.log(mainColor, subColor);
+    };
+};
+
+function getMainColor(e) {
+    console.log("get main color");
+    haveMainColor = true;
+    haveSubColor = false;
+
+    const target = e.target;
+    target.classList.add("clickedColor");
+    mainColor = target.style.backgroundColor;
     document.documentElement.style.setProperty(MAIN_COLOR, mainColor);
-    document.documentElement.style.setProperty(SUB_COLOR, subColor);
+    return mainColor;
+};
+
+function getSubColor(e) {
+    console.log("get sub color");
+    haveMainColor = true;
+    haveSubColor = true;
     
+    const target = e.target;
+    target.classList.add("clickedColor");
+    subColor = target.style.backgroundColor;
+    document.documentElement.style.setProperty(SUB_COLOR, subColor);
+    return subColor
+};
+
+function clearClickedColor() {
+    colorBox.forEach(target => {
+        target.classList.remove("clickedColor");
+    })
+    haveMainColor = false;
+    haveSubColor = false;
+}
+
+function handleCustomSub(e) {
+    e.preventDefault();
+    const value = e.target[1].value;
+    console.log(value.length);
+    localStorage.setItem(TITLE, value);
+    mainTitle.innerText = value;
+
     localStorage.setItem(MAIN_COLOR, mainColor);
-    localStorage.setItem(SUB_COLOR, subColor);
+    localStorage.setItem(SUB_COLOR, subColor); 
 
     popupPage.classList.toggle(HIDDEN_STYLE);
 };
+
 
 if(localStorage.getItem(TITLE)) {
     mainTitle.innerText = localStorage.getItem(TITLE);
@@ -491,10 +507,19 @@ if(!savedMainColor) {
 }
 
 mainTitle.addEventListener("click", handlePopupClick);
+
 colorBox.forEach(target => {
     target.addEventListener("click", handleColorClick, {
         captue: true
     });
 });
-editTitleForm.addEventListener("submit", handleTitleClick);
+reSelectBtn.addEventListener("click", clearClickedColor);
+editTitleForm.addEventListener("submit", handleCustomSub);
+editTitleForm.addEventListener("keydown", function(e) {
+    if (e.keyCode === 13) {
+        e.preventDefault();
+    };
+}, true);
+
+
 //////
