@@ -169,6 +169,8 @@ html {
     line-height: 1;
     border-radius: 100%;
     font-size: 14px;
+    padding-top: 1px;
+    padding-left: 1px;
 }
 
 /* to do list */
@@ -248,7 +250,8 @@ html {
 }
 #todo-list {
     height: fit-content;
-    max-height: 40vh;
+    max-height: 20vh;
+    overflow: auto;
 }
 #todo-list li {
     position: relative;
@@ -257,16 +260,20 @@ html {
     margin-top: 14px;
 }
 #todo-list li > button {
-    line-height: 16px;
-    padding: 2px 8px;
-    margin-right: -8px;
-    position: absolute;
-    top: 2px; right: 8px;
+    -webkit-appearance: none;
     background: none;
     border: none;
-    font-size: 16px;
     cursor: pointer;
+    font-size: 0px;
+    position: absolute;
+    top: 2px; right: 0px;
+    padding: 0;
+}
+#todo-list li > button > span {
+    line-height: 16px;
+    font-size: 16px;
     color: #000;
+    padding: 2px 8px;
 }
 #todo-list li input[type="checkbox"] {
     display: none;
@@ -289,8 +296,8 @@ html {
     position: relative;
 }
 #todo-list li input[type="checkbox"]:checked + label .checkBox {
-    background: var(--sub-color);
     background-image: url(../images/checked.svg);
+    background-color: var(--sub-color);
 }
 #todo-list li input[type="checkbox"] + label span:last-child {
     display: inline-block;

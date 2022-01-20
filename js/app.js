@@ -25,7 +25,7 @@ let deviceSize = window.matchMedia("screen and (max-width: 1023px)");
 
 const TODOS_KEY = "toDos";
 const HIDDEN_STYLE = "hidden";
-
+const ORIGINAL_TITLE = "𝐶𝑎𝑙𝑒𝑛𝑑𝑎𝑟 𝑤𝑖𝑡ℎ 𝑇𝑜 𝑑𝑜 𝑙𝑖𝑠𝑡";
 
 //////month select
 const monthAndYear = document.querySelector("#monthAndYear");
@@ -48,7 +48,7 @@ function next() {
     thisYear = (thisMonth === 11) ? thisYear + 1 : thisYear;
     thisMonth = (thisMonth + 1) % 12;
     thisStrMonth = String(thisMonth +1).padStart(2, "0");
-    console.log(thisStrMonth);
+
     selectMonth.value = `${thisYear}-${thisStrMonth}`;
     showCalendar(thisMonth, thisYear);
 };
@@ -57,6 +57,7 @@ function previous() {
     thisYear = (thisMonth === 0) ? thisYear - 1 : thisYear;
     thisMonth = (thisMonth === 0) ? 11 : thisMonth - 1;
     thisStrMonth = String(thisMonth +1).padStart(2, "0");
+
     selectMonth.value = `${thisYear}-${thisStrMonth}`;
     showCalendar(thisMonth, thisYear);
 };
@@ -184,14 +185,21 @@ nextMonthBtn.addEventListener("click", next);
 
 function saveToDos() {
     localStorage.setItem(onDateKey, JSON.stringify(toDos));
-    haveTotoCell(onDateKey)
+    const storageValue = localStorage.getItem(onDateKey);
+    
+    if(!storageValue || storageValue === "[]") {
+        notTodoCell(onDateKey);
+    } else {
+        haveTodoCell(onDateKey)
+    };
 };
 
 function deleteToDo(e) {
-    const thisLi = e.target.parentElement;
+    const thisLi = e.target.parentElement.parentElement;
     thisLi.remove();
     toDos = toDos.filter((todo) => todo.id !== parseInt(thisLi.id)); 
     saveToDos(); 
+
 };
 
 function checkedI(e) {
@@ -216,8 +224,9 @@ function paintToDo(newTodo) {
     span.innerText = newTodo.text; 
 
     const btn = document.createElement("button");
-    btn.innerText = "×";
-    btn.addEventListener("click", deleteToDo);
+    const btnSpan = document.createElement("span");
+    btnSpan.innerText = "×";
+    btn.addEventListener("click", deleteToDo, {capture: true});
 
     const checkBox = document.createElement("input");
     checkBox.type = "checkbox";
@@ -237,6 +246,7 @@ function paintToDo(newTodo) {
     li.appendChild(label);
     label.appendChild(span2);
     label.appendChild(span);
+    btn.appendChild(btnSpan);
     li.appendChild(btn); 
     toDoList.appendChild(li); 
 };
@@ -254,9 +264,10 @@ function handleToDoSubmit(e) {
     toDos.push(newToDoObj);
     paintToDo(newToDoObj); 
     saveToDos();
+    toDoList.scrollTop = toDoList.scrollHeight;
 };
 
-function haveTotoCell(e) {
+function haveTodoCell(e) {
     const cell = document.querySelectorAll("td");
     const regex = /[^0-9]/g;
     const keyCode = String(e.replace(regex, ""));
@@ -268,7 +279,20 @@ function haveTotoCell(e) {
             break;
         };
     };
+};
+
+function notTodoCell(e) {
+    const cell = document.querySelectorAll("td");
+    const regex = /[^0-9]/g;
+    const keyCode = String(e.replace(regex, ""));
+    const keyCodeOfDate = keyCode.slice(-2);
     
+    for(let i = 0; i <= cell.length; i++) {
+        if(cell[i].innerText === keyCodeOfDate) {
+            cell[i].classList.remove("haveTodo");
+            break;
+        };
+    };
 };
 
 toDoForm.addEventListener("submit", handleToDoSubmit);
@@ -294,6 +318,7 @@ function deleteAll() {
     toDoList.innerHTML = "";
     toDos = [];
     localStorage.removeItem(onDateKey);
+    notTodoCell(onDateKey);
 }
 
 deleteAllBtn.addEventListener("click", deleteAll);
@@ -367,8 +392,7 @@ function getMoveType(x, y) {
     if(nDis < 30) {return moveType};
 
     let slope = Math.abs(parseFloat((y / x).toFixed(2), 10)); 
-    console.log("slope", slope);
-    console.log("hslope", hSlope);
+
     if(slope > hSlope) {
         moveType = 1;
     } else {
@@ -393,11 +417,9 @@ function touchMove(e) {
     let moveX = startX - endX;
     let moveY = startY - endY;
     moveType = getMoveType(moveX, moveY);
-    console.log(moveType);
 
     const target = e.target.tagName;
     if (target == 'SPAN' && moveType === 0) {
-        console.log("a",moveType);
         e.target.classList.add(HIDDEN_STYLE);
         promptFunc(e);
     };
@@ -408,6 +430,7 @@ toDoList.addEventListener("touchend", touchEnd, false);
 
 
 //////custom popup page
+const mainTitleArea = document.querySelector(".header--text-area");
 const mainTitle = document.querySelector(".header--text-area h1");
 const popupPage = document.querySelector(".custom-popup-page")
 const editTitleForm = document.querySelector("#editTitleForm");
@@ -421,30 +444,28 @@ const TITLE = "title";
 
 let savedMainColor = localStorage.getItem(MAIN_COLOR);
 let savedSubColor = localStorage.getItem(SUB_COLOR);
-
 const savedTitle = localStorage.getItem(TITLE);
-
-function handlePopupClick() {
-    popupPage.classList.toggle(HIDDEN_STYLE);
-    editTitleInput.value = mainTitle.innerText;
-};
 
 let haveMainColor = false;
 let haveSubColor = false;
 let mainColor;
 let subColor;
 
+
+function handlePopupClick() {
+    popupPage.classList.toggle(HIDDEN_STYLE);
+    editTitleInput.value = mainTitle.innerText;
+};
+
 function handleColorClick(e) {
     if (!haveMainColor && !haveSubColor) {
         getMainColor(e);
     } else if (haveMainColor && !haveSubColor) {
         getSubColor(e);
-        console.log(mainColor, subColor);
     };
 };
 
 function getMainColor(e) {
-    console.log("get main color");
     haveMainColor = true;
     haveSubColor = false;
 
@@ -456,7 +477,6 @@ function getMainColor(e) {
 };
 
 function getSubColor(e) {
-    console.log("get sub color");
     haveMainColor = true;
     haveSubColor = true;
     
@@ -478,14 +498,25 @@ function clearClickedColor() {
 function handleCustomSub(e) {
     e.preventDefault();
     const value = e.target[1].value;
-    console.log(value.length);
-    localStorage.setItem(TITLE, value);
-    mainTitle.innerText = value;
+    
+    if(value) {
+        localStorage.setItem(TITLE, value);
+        mainTitle.innerText = value;
+    }else {
+        localStorage.setItem(TITLE, ORIGINAL_TITLE);
+        mainTitle.innerText = ORIGINAL_TITLE;
+    }
 
-    localStorage.setItem(MAIN_COLOR, mainColor);
-    localStorage.setItem(SUB_COLOR, subColor); 
+    if(mainColor) {
+        localStorage.setItem(MAIN_COLOR, mainColor);
+    };
 
+    if(subColor) {
+        localStorage.setItem(SUB_COLOR, subColor);
+    };
+    
     popupPage.classList.toggle(HIDDEN_STYLE);
+    clearClickedColor()
 };
 
 
@@ -501,7 +532,7 @@ if(!savedMainColor) {
     document.documentElement.style.setProperty(SUB_COLOR, savedSubColor);
 }
 
-mainTitle.addEventListener("click", handlePopupClick);
+mainTitleArea.addEventListener("click", handlePopupClick);
 
 colorBox.forEach(target => {
     target.addEventListener("click", handleColorClick, {
