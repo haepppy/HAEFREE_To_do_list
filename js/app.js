@@ -21,17 +21,16 @@ const toDoInput = toDoForm.querySelector("input");
 const toDoList = document.querySelector("#todo-list");
 const checkboxArr = document.querySelectorAll("input[type='checkbox']");
 
-let deviceSize = window.matchMedia("screen and (max-width: 1023px)");
-
 const TODOS_KEY = "toDos";
 const HIDDEN_STYLE = "hidden";
 const ORIGINAL_TITLE = "𝐶𝑎𝑙𝑒𝑛𝑑𝑎𝑟 𝑤𝑖𝑡ℎ 𝑇𝑜 𝑑𝑜 𝑙𝑖𝑠𝑡";
 
 //////month select
 const monthAndYear = document.querySelector("#monthAndYear");
+const selectMonth = document.querySelector(".seletMonth");
+
 showCalendar(thisMonth, thisYear);
 
-const selectMonth = document.querySelector(".seletMonth");
 selectMonth.addEventListener("change", function(e) {
     const value = e.target.value;
     const yearMonArr = value.split("-");
@@ -166,6 +165,7 @@ if (today) {
     const dateSpan = todoArea.querySelector("h2");
     dateSpan.innerHTML = `${thisYear}년 ${thisMonthStr}월 ${thisDate}일`;
     onDateKey = dateSpan.innerHTML;
+    selectMonth.value = `${thisYear}-${thisMonthStr}`;
 
     const savedToDos = localStorage.getItem(onDateKey);
     if (savedToDos !== null) {
@@ -531,6 +531,7 @@ if(!savedMainColor) {
     document.documentElement.style.setProperty(MAIN_COLOR, savedMainColor);
     document.documentElement.style.setProperty(SUB_COLOR, savedSubColor);
 }
+
 
 mainTitleArea.addEventListener("click", handlePopupClick);
 
