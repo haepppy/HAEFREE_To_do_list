@@ -100,6 +100,7 @@ function showCalendar(month, year) {
                 };
 
                 let dateKey = `${year}년 ${spanMonth.innerHTML}월 ${date}일`;
+                
                 let storageValue = localStorage.getItem(dateKey);
                 if (storageValue && storageValue !== "[]") {
                     cell.classList.add("haveTodo");

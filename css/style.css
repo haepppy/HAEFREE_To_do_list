@@ -438,3 +438,10 @@ input#editTitle {
     padding-top: 10px;
     font-size: 14px;
 }
+
+.explanationArea > p {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-top: 16px;
+    color: #959595;
+}
